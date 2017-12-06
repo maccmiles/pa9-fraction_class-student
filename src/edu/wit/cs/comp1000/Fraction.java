@@ -4,19 +4,20 @@ import java.util.Scanner;
 
 // TODO: document this class
 public class Fraction {
-	
+	private int num;//NUMERATOR
+	private int den;//DENOMINATOR
 	/**
 	 * Error to output if denominator is zero
 	 */
 	@SuppressWarnings("unused")
 	private static final String E_DEN_ZERO = "Denominator cannot be zero.";
-	
+
 	/**
 	 * Error to output if dividing by zero
 	 */
 	@SuppressWarnings("unused")
 	private static final String E_DIV_ZERO = "Cannot divide by zero.";
-	
+
 	/**
 	 * Returns the greatest common divisor (gcd) of two integers
 	 * 
@@ -31,10 +32,10 @@ public class Fraction {
 			num2 = num1 % num2;
 			num1 = t;
 		}
-		
+
 		return num1;
 	}
-	
+
 	/**
 	 * Returns the simplified form of a fraction
 	 * 
@@ -45,15 +46,15 @@ public class Fraction {
 	private static int[] simplifyFraction(int[] f) {
 		final int gcd = gcd(f[0], f[1]);
 		int[] result = {f[0]/gcd, f[1]/gcd};
-		
+
 		if ((result[0]<0 && result[1]<0) || (result[1]<0)) {
 			result[0] = -result[0];
 			result[1] = -result[1];
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * Constructs a fraction given a numerator/denominator
 	 * 
@@ -63,16 +64,23 @@ public class Fraction {
 	 * @param d denominator
 	 */
 	public Fraction(int n, int d) {
-		// TODO: write your code here
+		if(d == 0) {
+			System.out.println(E_DEN_ZERO);
+			System.exit(0);//Exit if Denominator is 0
+		}
+		int []arr=new int[] {n,d};//create temp array
+		num=simplifyFraction(arr)[0];//simplify numerator
+		den =simplifyFraction(arr)[1];//simplify denominator
 	}
-	
+
 	/**
 	 * Constructs a fraction as 0/1
 	 */
 	public Fraction() {
-		// TODO: write your code here
+		num = 0;
+		den = 1;
 	}
-	
+
 	/**
 	 * Constructs a fraction given input from a supplied Scanner
 	 * 
@@ -81,18 +89,28 @@ public class Fraction {
 	 * @param s scanner from which to read fraction components
 	 */
 	public Fraction(Scanner s) {
-		// TODO: write your code here
+		System.out.printf("Enter numerator: ");
+		int n = s.nextInt();
+		System.out.printf("Enter denominator: ");
+		int d = s.nextInt();
+		if(d == 0) {
+			System.out.println(E_DEN_ZERO);
+			System.exit(0);//exit if denominator is 0
+		}
+		int []arr=new int[] {n,d};//create temp array
+		num=simplifyFraction(arr)[0];//simplify numerator
+		den =simplifyFraction(arr)[1];//simplify denominator
 	}
-	
+
 	/**
 	 * Gets the decimal value of a fraction
 	 * 
 	 * @return decimal version
 	 */
 	public double toDecimal() {
-		return 0; // TODO: replace with your code
+		return ((num*1.0)/(den*1.0));//return numerator/denominator, casted as double
 	}
-	
+
 	/**
 	 * Returns the string value of a fraction:
 	 * - if denominator is 1, "numerator"
@@ -101,27 +119,30 @@ public class Fraction {
 	 * @return string formatted fraction
 	 */
 	public String toString() {
-		return ""; // TODO: replace with your code
+		if (den == 1) {
+			return num+"";//Return numerator casted as string
+		}
+		return String.format("%d/%d (%.3f)",num,den,this.toDecimal());//construct string in fraction format, with trailing decimal
 	}
-	
+
 	/**
 	 * Gets the fraction numerator
 	 * 
 	 * @return numerator
 	 */
 	public int getNumerator() {
-		return 0; // TODO: replace with your code
+		return num;//return Numerator
 	}
-	
+
 	/**
 	 * Gets the fraction denominator
 	 * 
 	 * @return denominator
 	 */
 	public int getDenominator() {
-		return 0; // TODO: replace with your code
+		return den;//return Denominator
 	}
-	
+
 	/**
 	 * Adds a fraction to this fraction
 	 * 
@@ -129,9 +150,13 @@ public class Fraction {
 	 * @return a new fraction that sums this and the supplied parameter
 	 */
 	public Fraction plus(Fraction f) {
-		return new Fraction(); // TODO: replace with your code
+		Fraction f2 = new Fraction(num*f.getDenominator()+(f.getNumerator()*den),den*f.getDenominator());//create new fraction
+		int []arr=new int[] {f2.getNumerator(),f2.getDenominator()};//create temp array
+		int t1=simplifyFraction(arr)[0];//simplify numerator
+		int t2 =simplifyFraction(arr)[1];//simplify denominator
+		return new Fraction(t1,t2);//return t1,t2
 	}
-	
+
 	/**
 	 * Subtracts a fraction from this fraction
 	 * 
@@ -139,9 +164,13 @@ public class Fraction {
 	 * @return a new fraction that results from subtracting the supplied parameter from this
 	 */
 	public Fraction minus(Fraction f) {
-		return new Fraction(); // TODO: replace with your code
+		Fraction f2 = new Fraction(num*f.getDenominator()-(f.getNumerator()*den),den*f.getDenominator());//create new fraction
+		int []arr=new int[] {f2.getNumerator(),f2.getDenominator()};//create temp array
+		int t1=simplifyFraction(arr)[0];//simplify numerator
+		int t2 =simplifyFraction(arr)[1];//simplify denominator
+		return new Fraction(t1,t2);//return t1,t2
 	}
-	
+
 	/**
 	 * Multiplies a fraction with this fraction
 	 * 
@@ -149,9 +178,13 @@ public class Fraction {
 	 * @return a new fraction that is the product of this and the supplied parameter
 	 */
 	public Fraction times(Fraction f) {
-		return new Fraction(); // TODO: replace with your code
+		Fraction f2 = new Fraction(num*f.getNumerator(),den*f.getDenominator());//create new fraction
+		int []arr=new int[] {f2.getNumerator(),f2.getDenominator()};//create temp array
+		int t1=simplifyFraction(arr)[0];//simplify numerator
+		int t2 =simplifyFraction(arr)[1];//simplify denominator
+		return new Fraction(t1,t2);//return t1,t2
 	}
-	
+
 	/**
 	 * Divides a fraction into this fraction
 	 * 
@@ -159,7 +192,15 @@ public class Fraction {
 	 * @return a new fraction that is the quotient of this and the supplied parameter
 	 */
 	public Fraction divides(Fraction f) {
-		return new Fraction(); // TODO: replace with your code
+		if (f.getNumerator()==0) {
+			System.out.println(E_DIV_ZERO);
+			System.exit(0);//quit if numerator is 0
+		}
+		Fraction f2 = new Fraction(num*f.getDenominator(),den*f.getNumerator());//create new fraction
+		int []arr=new int[] {f2.getNumerator(),f2.getDenominator()};//create temp array
+		int t1=simplifyFraction(arr)[0];//simplify numerator
+		int t2 =simplifyFraction(arr)[1];//simplify denominator
+		return new Fraction(t1,t2);//return t1,t2
 	}
 
 }
