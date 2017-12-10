@@ -1,0 +1,14 @@
+Score: 100
+
+== ontime ==
+ontime: +0
+
+== junit ==
+edu.wit.cs.comp1000.grading.PA9aGrading#testConstruct: +30
+edu.wit.cs.comp1000.grading.PA9aGrading#testAdd: +10
+edu.wit.cs.comp1000.grading.PA9aGrading#testSubtract: +10
+edu.wit.cs.comp1000.grading.PA9aGrading#testMultiply: +10
+edu.wit.cs.comp1000.grading.PA9aGrading#testDivide: +10
+edu.wit.cs.comp1000.grading.PA9aGrading#testDivideBad: +5
+edu.wit.cs.comp1000.grading.PA9aGrading#testLine: +5
+edu.wit.cs.comp1000.grading.PA9aGrading#testProg: +20
